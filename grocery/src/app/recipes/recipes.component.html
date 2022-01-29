@@ -1,0 +1,10 @@
+<div *ngIf="recipes.length; else emptyTmp" class="recipes__container">
+  <ng-content></ng-content>
+  <app-recipes-element *ngFor="let recipe of recipes"
+                       [recipe]="recipe"
+                       (click)="recipeSelectionChange.emit(recipe)">
+  </app-recipes-element>
+</div>
+<ng-template #emptyTmp>
+  <nz-empty nzNotFoundImage="simple"></nz-empty>
+</ng-template>

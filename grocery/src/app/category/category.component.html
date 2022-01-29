@@ -1,0 +1,9 @@
+
+<div class="category__container">
+  <div *ngFor="let items of categories"
+       class="category__element">
+    <div class="category__icon"
+         [ngClass]="'category__icon--' + items['id']"></div>
+    <div class="category__name">{{items.name}}</div>
+  </div>
+</div>

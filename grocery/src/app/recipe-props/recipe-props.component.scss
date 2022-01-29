@@ -1,0 +1,114 @@
+.recipe-props {
+  &__image {
+    width: 100vw;
+    height: 234px;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+  &__container {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  &__title {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  &__description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 12px;
+  }
+  &__ingredients {
+    margin-top: 24px;
+    font-size: 11px;
+    font-weight: 600;
+    &--number {
+      margin-top: 42px;
+      margin-bottom: 10px;
+      background-color: #E64398;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      width: 25px;
+      height: 23px;
+      border-radius: 6px;
+      text-align: center;
+      color: #F0EBF4;
+    }
+    &--title {
+      display: flex;
+      justify-content: space-between;
+    }
+    &--all {
+      text-decoration: underline;
+      font-size: 13px;
+      font-weight: 400;
+      margin-top: 24px;
+      cursor: pointer;
+    }
+  }
+  &__add-button {
+    margin-top: 20px;
+    color: #F0EBF4;
+  }
+
+  &__mock {
+    width: calc(100% + 30px);
+    margin: 0 -15px;
+  }
+
+  &__notations {
+    margin-top: 50px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  &__subtitle {
+    padding-bottom: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__notation-container {
+    margin-top: 16px;
+    margin-bottom: 34px;
+    padding: 16px;
+    background: #FFFFFF;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07);
+    border-radius: 20px;
+  }
+
+  &__notification {
+    height: 95px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    background: rgba(36, 189, 60, 0.1);
+    border-radius: 20px;
+    &--text {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 21px;
+      color: #24BD3C;
+    }
+    &--icon {
+      height: 44px;
+      width: 44px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44' fill='none'%3E%3Cg filter='url(%23filter0_d)'%3E%3Ccircle cx='22' cy='19' r='12' fill='%2324BD3C'/%3E%3C/g%3E%3Cpath d='M22 24V18' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='14' r='1' fill='white'/%3E%3Cdefs%3E%3Cfilter id='filter0_d' x='0' y='0' width='44' height='44' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'/%3E%3CfeOffset dy='3'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.141176 0 0 0 0 0.741176 0 0 0 0 0.235294 0 0 0 0.2 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E");
+    }
+  }
+
+  &__steps-container {
+    padding: 16px;
+    background: #FFFFFF;
+    box-shadow: 0 3px 5px rgb(0 0 0 / 7%);
+    border-radius: 20px;
+  }
+}

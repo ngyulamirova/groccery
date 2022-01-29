@@ -1,0 +1,69 @@
+<div class="list-element__container"
+     [ngClass]="editable ? 'list-element__block' : 'list-element__custom-label'"
+     (click)="$event.stopPropagation()">
+  <label nz-checkbox
+         class="list-element__label"
+         [disabled]="!(element && (element['title'] | hash))"
+         [(ngModel)]="element && element['checked']"
+         (ngModelChange)="check(element)">
+    <div *ngIf="!editable" class="list-element__not-editable">
+      <span [class.text-line-through]="element && element['checked'] && !nonDecorated">
+        {{element && element['title'] | hash}}</span>
+      <span *ngIf="element && element['weight']">{{element['weight']}}</span>
+    </div>
+  </label>
+  <ng-container *ngIf="editable">
+    <img *ngIf="element.url && element.title"
+         class="list-element__image"
+         [src]="element.url"
+         (click)="showPicture = true">
+    <textarea nz-input rows="2"
+              class="list-element__editable"
+              placeholder="добавить пункт"
+              [style.paddingLeft]="element.url ? '30px' : '0'"
+              [class.text-line-through]="element && element['checked'] && !nonDecorated"
+              [nzAutocomplete]="auto"
+              [ngModel]="element && element['title'] | hash"
+              (ngModelChange)="changeTitle($event)"
+              (click)="showList = false"
+              (paste)="paste($event)"
+              (input)="getProductList()">
+    </textarea>
+
+    <div *ngIf="id || (element && (element['title'] | hash))" class="list-element__del-icon" (click)="deleteId.emit()"></div>
+  </ng-container>
+</div>
+
+<nz-autocomplete #auto>
+  <ng-container *ngIf="showList">
+    <nz-auto-option *ngFor="let option of selectedProducts"
+                    nzDisabled
+                    [nzValue]="option.title"
+                    (click)="selectListElement($event, option)">
+      <div class="list-element__option-list">
+        <img *ngIf="option.url; else noTMP" class="list-element__option-list--image"
+             [src]="option.url">
+        <div class="list-element__option-list--text">{{ option.title }}</div>
+      </div>
+    </nz-auto-option>
+  </ng-container>
+</nz-autocomplete>
+
+<ng-template #noTMP>
+  <div></div>
+</ng-template>
+<ng-template #modalTitle>
+  <p nz-typography
+     style="padding: 0 20px"
+     [nzContent]="element && (element['title'] | hash)"></p>
+</ng-template>
+
+<nz-modal nzCentered
+          [nzTitle]="modalTitle"
+          [(nzVisible)]="showPicture"
+          (nzOnCancel)="showPicture = null; $event.preventDefault()">
+  <ng-template nzModalContent>
+    <img class="list-element__modal-picture" [src]="element.url">
+  </ng-template>
+  <ng-template nzModalFooter></ng-template>
+</nz-modal>

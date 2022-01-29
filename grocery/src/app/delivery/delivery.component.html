@@ -1,0 +1,14 @@
+<app-list [selectable]="true"
+          [panels]="panels"
+          style="margin-top:-12px"
+          (panelChange)="panelChange.emit($event)"></app-list>
+<div class="delivery__right-button--container">
+  <button nz-button
+          nzType="primary"
+          nzSize="large"
+          class="delivery__right-button"
+          [disabled]="getIfDisabled()"
+          (click)="selectList.emit()">
+    <div class="delivery__right-icon"></div>
+  </button>
+</div>

@@ -1,0 +1,20 @@
+<nz-table [nzData]="list" [nzScroll]="true" [nzFrontPagination]="false" [nzShowPagination]="false">
+  <tbody cdkDropList [class.right-element]="right"
+         (cdkDropListDropped)="drop($event)">
+    <tr *ngFor="let element of list; index as i; trackBy: trackByFn"
+        cdkDrag cdkDragStartDelay="200"
+        (cdkDragMoved)="moveRow($event)">
+      <app-list-element [class.list-element__sub-element] = "element?.groupTitle"
+                        [element]="element"
+                        [scrolled]="scrolled"
+                        [editable]="editable"
+                        [id]="i"
+                        [nonDecorated]="nonDecorated"
+                        (titleChange)="changeTitle($event, i)"
+                        (checkedChange)="panelChange.emit(element)"
+                        (deleteId)="deleteElement.emit(i)"
+                        (firstElementChange)="addFirstElement()"
+                        (elementChange)="addElements($event, i)"></app-list-element>
+    </tr>
+  </tbody>
+</nz-table>

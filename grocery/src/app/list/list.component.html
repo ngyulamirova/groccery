@@ -1,0 +1,60 @@
+<div class="list__container" cdkDropListGroup>
+  <nz-table [nzData]="panels" [nzFrontPagination]="false" [nzShowPagination]="false">
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+    <tr *ngFor="let panel of panels; index as i"
+        class="list__tr"
+        cdkDrag
+        cdkDragStartDelay="200"
+        appSwipe
+        [panel]="panel"
+        (cdkDragStarted)="isDragged = true"
+        (cdkDragReleased)="isDragged= false">
+      <nz-collapse>
+        <nz-collapse-panel [ngClass]="selectable ? 'selectable-container' : 'not-selectable-container'"
+                           [nzHeader]="nameTmp"
+                           [@openClose]="panel.left ? 'open' : 'closed'"
+                           [nzShowArrow]="false"
+                           [nzDisabled]="true"
+                           [attr.id]="'panel_' + i"
+                           [nzExtra]="extraTpl"
+                           (click)="clickOnTitle(panel)"
+                           [(nzActive)]="panel.active">
+          <ng-container *ngFor="let element of panel.elements; index as i">
+            <app-list-element *ngIf="element?.title && !element?.groupTitle"
+                              class="list__element"
+                              [element]="element"
+                              (checkedChange)="panelChange.emit(i)">
+            </app-list-element>
+          </ng-container>
+          <ng-template #nameTmp>
+            <div class="list__element-container">
+              <div>
+                <div class="list__name">{{panel?.newName ? panel.newName : panel.name}}</div>
+                <div class="list__creation-date">{{panel.creationDate | date: 'd MMMM y'}}</div>
+              </div>
+              <span class="list__number-of-elements">{{panel.elements |
+                nonEmptyElementsLength : panel.elements.length }}</span>
+            </div>
+          </ng-template>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <ng-template #extraTpl>
+        <label *ngIf="selectable"
+               nz-checkbox
+               class="list__selectable"
+               [(ngModel)]="panel.checked"
+               (ngModelChange)="selectionChange.emit()"></label>
+
+        <div *ngIf="!notClickable" class="list__icon" (click)="openList($event, i)">
+          <div [ngClass]="panel.active ? 'list__active' : 'list__not-active'"></div>
+        </div>
+      </ng-template>
+      <div [@openClose]="panel.left ? 'visible' : 'hide'"
+           class="list__delete-icon-container"
+           (click)="deletePanel(panel)">
+        <div class="list__delete-icon"></div>
+      </div>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

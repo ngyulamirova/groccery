@@ -1,0 +1,8 @@
+<div class="recipes-element__container">
+  <img class="recipes-element__image"
+       [src]="recipe.url">
+  <div class="recipes-element__text--time">{{recipe.time}}</div>
+  <div class="recipes-element__text">
+    <div class="recipes-element__text--title">{{recipe.name | hash}}</div>
+  </div>
+</div>

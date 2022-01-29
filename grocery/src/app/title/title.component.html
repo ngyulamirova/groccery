@@ -1,0 +1,29 @@
+<div class="title">
+  <div *ngIf="step === 1 || (step === 2 && props)"
+       class="title__icon title__icon--icon"
+       (click)="goBack.emit()">
+    <img src="assets/back.png">
+  </div>
+
+  <div class="title__icon-container"
+       [style.width]="step === 2 ? '30px' : '100px'">
+    <div *ngIf="step === 1 "
+         class="title__icon title__icon--icon"
+         (click)="addNewList.emit()">
+      <img src="assets/pencil.png">
+    </div>
+
+    <div *ngIf="step === 1 || (step === 2 && props)"
+         class="title__icon title__icon--icon"
+         (click)="userClick.emit()">
+      <img src="assets/share.png">
+    </div>
+
+    <div *ngIf="step === 1"
+         class="title__icon title__icon--icon"
+         (click)="deleteList.emit()">
+      <img src="assets/basket.png">
+    </div>
+  </div>
+  <ng-content></ng-content>
+</div>

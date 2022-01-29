@@ -1,0 +1,18 @@
+.delivery {
+  &__right-icon {
+    height: 24px;
+    width: 24px;
+    margin: auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M3.75 12H20.25' stroke='%23241F20' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M13.5 5.25L20.25 12L13.5 18.75' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  &__right-button {
+    height: 42px;
+    width: 74px;
+
+    &--container {
+      display: flex;
+      justify-content: flex-end;
+      margin: 30px 24px;
+    }
+  }
+}

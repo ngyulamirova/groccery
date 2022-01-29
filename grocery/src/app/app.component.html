@@ -1,0 +1,150 @@
+<link rel="stylesheet" href="app.component.scss">
+<div *ngIf="!loading" class="layout">
+  <app-title *ngIf="step === 1 || (step === 2 && props)"
+             [step]="step"
+             [props]="props"
+             [activeTitle]="activePanel"
+             (goBack)="goBack()"
+             (deleteList)="deleteList()"
+             (userClick)="showShare = true"
+             (addNewList)="addNewList()">
+
+  </app-title>
+  <div class="container"
+       (scroll)="scroll()"
+       (click)="changeLabel(); $event.stopPropagation()">
+
+    <div class="header">
+      <ng-container *ngIf="!editTitle; else editTitleTmp">
+        <span class="title">{{step === 1 ? (activePanel?.newName ? activePanel.newName : activePanel.name)
+          : stepsTitle[step]}}</span>
+        <span *ngIf="step === 1"
+              class="number-of-elements">{{activePanel?.elements |
+          nonEmptyElementsLength : activePanel?.elements.length }}</span>
+      </ng-container>
+    </div>
+
+    <nz-input-group *ngIf="(step === 2 && !props)"
+                    class="input searchbox"
+                    [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="Найти"
+             [(ngModel)]="selectString"
+             (input)="select()"/>
+    </nz-input-group>
+
+    <ng-container [ngSwitch]="step">
+      <div *ngSwitchCase="0" class="inner-container">
+        <img src="assets/User.jpg" class="user">
+        <app-menu [(step)]="step" (stepChange)="props = false"></app-menu>
+        <div class="add-list"
+             (click)="addNewList()">
+          <div class="add-icon"></div>
+          <span class="add-name">Новый список</span>
+        </div>
+        <app-list [panels]="panels"
+                  (panelChange)="sortPanel($event)"
+                  (titleChange)="changeList($event)"></app-list>
+      </div>
+      <div *ngSwitchCase="1" class="inner-container" style="padding-top: 12px;">
+          <app-products-list [list]="activePanel?.elements"
+                             [editable]="true"
+                             [scrolled]="isScrolled"
+                             (deleteElement)="deleteElement($event)"
+                             (panelChange)="sortActivePanel($event)"></app-products-list>
+          <ng-container *ngTemplateOutlet="deliveryButtonTmp; context: {$implicit: 'category'}"></ng-container>
+
+      </div>
+      <ng-container *ngSwitchCase="2">
+        <app-recipes *ngIf="!props; else recipePropsTmp"
+                     [recipes]="recipes"
+                     (recipeSelectionChange)="openRecipe($event)">
+          <app-menu [(step)]="step" (stepChange)="props = false"></app-menu>
+        </app-recipes>
+      </ng-container>
+      <ng-container *ngSwitchCase="4">
+        <img class="share-img"
+             src="assets/image%208.png"
+             (click)="step = 1">
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <app-footer *ngIf="step !== 1"></app-footer>
+
+</div>
+
+<ng-template #recipePropsTmp>
+  <app-recipe-props [recipe]="selectedRecipe"
+                    (selectAll)="selectAll()"
+                    (addToList)="isVisibleMiddle = true"
+                    (recipeSelectionChange)="sorRecipe()">
+    <app-menu [(step)]="step" (stepChange)="props = false"></app-menu>
+  </app-recipe-props>
+</ng-template>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<nz-modal
+  nzTitle="Куда добавить"
+  nzCentered
+  [(nzVisible)]="isVisibleMiddle"
+  (nzOnCancel)="isVisibleMiddle = false"
+>
+  <ng-container *nzModalContent>
+    <app-list [panels]="panels"
+              [notClickable]="true"
+              (selectAddingList)="addSelectedToList($event)"></app-list>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="primary"
+            class="footer-button"
+            (click)="createListForRecipes()">Создать новый
+    </button>
+  </div>
+</nz-modal>
+
+<ng-template #editTitleTmp>
+    <input nz-input
+           [style.width] = "((activePanel.newName.length + 1) * 18) + 'px'"
+           class="change-input header"
+           appClickOutside
+           (clickOutsideChange)="editTitle = false"
+           [(ngModel)]="activePanel.newName"/>
+    <span class="number-of-elements">{{activePanel?.elements |
+      nonEmptyElementsLength : activePanel?.elements.length }}</span>
+</ng-template>
+
+<nz-modal
+  nzCentered
+  [nzClosable]="false"
+  [(nzVisible)]="showShare"
+>
+  <ng-container *nzModalContent>
+    <p class="modal-container">Возможно другому человеку будет проще найти нужный товар, если вы уточните тип
+      товара/бренд/количество"</p>
+  </ng-container>
+  <ng-container *nzModalFooter>
+    <div class="modal-confirm-button">
+      <button nz-button
+              nzType="primary"
+              (click)="showShare = false">уточнить
+      </button>
+      <button nz-button
+              style="border-radius: 8px;"
+              (click)="showShare = false; share()">пропустить
+      </button>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<img src="../assets/loader.png" class="loading" [@toggle]="loading">
+
+<ng-template #deliveryButtonTmp let-type>
+  <button nz-button
+          nzType="primary"
+          nzBlock
+          class="delivery-bottom-button"
+          [disabled]="getIfNonIsSelected(type)">Заказать продукты
+  </button>
+</ng-template>

@@ -1,0 +1,52 @@
+:host{
+  position: fixed;
+  top:0;
+  z-index: 999;
+  width:100%;
+  padding-bottom: 20px;
+  &::after{
+    content: '';
+    position: absolute;
+    top:20px;
+    left:0;
+
+  }
+}
+
+.title {
+  padding: 12px 10px;
+  font-weight: bold;
+  font-size: 15.3986px;
+  line-height: 20px;
+  display: flex;
+  justify-content: space-between;
+
+  &__icon-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+  }
+
+  &__name {
+    max-width: calc(100vw - 160px);
+    margin-left: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    padding: 0 6px;
+    color: #fff;
+    cursor: pointer;
+
+
+    &--icon {
+      width: 18px;
+      height: 19px;
+    }
+  }
+}

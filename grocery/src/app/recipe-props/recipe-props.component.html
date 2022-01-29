@@ -1,0 +1,46 @@
+<img class="recipe-props__image" style="border-radius: 0" [src]="recipe.url">
+<div class="recipe-props__container">
+  <ng-content></ng-content>
+  <p class="recipe-props__title">{{recipe.name | hash}}</p>
+  <img src="assets/recipe-props.png" class="recipe-props__mock">
+  <p class="recipe-props__description">{{recipe.description}}</p>
+  <div class="recipe-props__ingredients--title">
+    <div class="recipe-props__ingredients">ИНГРЕДИЕНТЫ</div>
+    <div class="recipe-props__ingredients--all"
+         (click)="selectAll.emit()">Выбрать все</div>
+  </div>
+  <app-list-element *ngFor="let prop of recipe.elements, index as i"
+                    [element]="prop"
+                    [nonDecorated]="true"
+                    (checkedChange)="checkedChange()"></app-list-element>
+  <button nz-button nzBlock
+          nzType="primary"
+          class="recipe-props__add-button"
+          [disabled]="getButtonDisabled(recipe.elements)"
+          (click)="addToList.emit()">Добавить в список покупок</button>
+  <div class="recipe-props__notations" >Пошаговый рецепт</div>
+  <div *ngIf="recipe.notations" class="recipe-props__notation-container">
+    <div class="recipe-props__subtitle">Подготовиться</div>
+    <img class="recipe-props__image"
+         style="width: calc(100vw - 62px)"
+         [src]="recipe.notations.url">
+    <p class="recipe-props__description" style="margin-top: 12px">{{recipe.notations.text}}</p>
+    <div *ngIf="recipe.notification" class="recipe-props__notification">
+      <div class="recipe-props__notification--text">
+        {{recipe.notification}}
+      </div>
+      <div class="recipe-props__notification--icon"></div>
+    </div>
+  </div>
+
+  <div class="recipe-props__steps-container">
+    <div class="recipe-props__subtitle" style="margin-bottom: -40px">Начать готовить</div>
+    <ng-container *ngFor="let step of recipe.steps; index as i">
+      <div class="recipe-props__ingredients--number">{{i + 1}}</div>
+      <p class="recipe-props__description">{{step.text}}</p>
+      <img  class="recipe-props__image"
+            style="width: calc(100vw - 62px)"
+            [src]="step.url">
+    </ng-container>
+  </div>
+</div>
