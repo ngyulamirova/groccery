@@ -1,5 +1,5 @@
 <div class="menu__container">
-  <nz-radio-group [(ngModel)]="step" (ngModelChange)="stepChange.emit(step)">
+  <nz-radio-group style="display: flex" [(ngModel)]="step" (ngModelChange)="stepChange.emit(step)">
     <label nz-radio-button [nzValue]="2">Рецепты</label>
     <label nz-radio-button [nzValue]="0">Покупки</label>
   </nz-radio-group>

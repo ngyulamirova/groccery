@@ -17,7 +17,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class AppComponent {
-  step = 1;
+  step = 0;
   categories: { id: string, name: string }[] = [...CategoriesData];
   loading = true;
   props = false;
@@ -33,12 +33,20 @@ export class AppComponent {
   stepsTitle = StepsModel;
   editTitle;
   showShare = false;
+  isMobile = false;
 
   constructor(private cdr: ChangeDetectorRef) {
     setTimeout(() => {
       this.loading = false;
       this.cdr.detectChanges();
     }, 2000);
+    const ua = navigator.userAgent;
+    const checker = {
+      iphone: ua.match(/(iPhone|iPod|iPad)/),
+      blackberry: ua.match(/BlackBerry/),
+      android: ua.match(/Android/)
+    };
+    if (checker.android || checker.iphone || checker.blackberry) this.isMobile = true;
   }
 
   changeLabel(): void {

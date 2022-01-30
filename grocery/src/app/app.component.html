@@ -34,7 +34,10 @@
 
     <ng-container [ngSwitch]="step">
       <div *ngSwitchCase="0" class="inner-container">
-        <img src="assets/User.jpg" class="user">
+        <div class="user">
+          <img src="assets/User.jpg" class="user__photo">
+          <h2 class="user__name">Гюльамирова Надежда</h2>
+        </div>
         <app-menu [(step)]="step" (stepChange)="props = false"></app-menu>
         <div class="add-list"
              (click)="addNewList()">
